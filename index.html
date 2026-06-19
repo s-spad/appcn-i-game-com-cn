@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>爱游戏 · 杂志专题</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Georgia", "Noto Serif SC", "宋体", "Times New Roman", serif;
+      background: #f6f4f0;
+      color: #2d2a28;
+      line-height: 1.7;
+    }
+
+    /* === 深色头图 hero === */
+    .hero {
+      background: #1a1c1e;
+      color: #ece7e1;
+      padding: 4.8rem 1.8rem 3.2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      display: block;
+      width: 72px;
+      height: 3px;
+      background: #b78c5a;
+      margin: 1.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #c5bbb0;
+      max-width: 640px;
+      margin: 0.6rem auto 0;
+    }
+
+    /* === 浅色正文区 === */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.6rem 1.8rem 3.8rem;
+      background: #faf8f5;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.02);
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #3f3a35;
+      border-left: 4px solid #b78c5a;
+      padding-left: 1rem;
+      margin: 2.2rem 0 1rem 0;
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0.2rem;
+    }
+
+    .content p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    .content p.inset {
+      padding-left: 1.2rem;
+      border-left: 2px solid #dfd7ce;
+      color: #4e4842;
+    }
+
+    .highlight-box {
+      background: #f0ebe3;
+      padding: 1.6rem 1.8rem;
+      margin: 1.8rem 0 1.4rem;
+      border-radius: 6px;
+    }
+
+    .highlight-box p {
+      margin-bottom: 0.6rem;
+    }
+
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 强调色链接 */
+    a {
+      color: #9f6f3f;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+
+    a:hover {
+      color: #6f4f2e;
+    }
+
+    /* 页尾访问提示 */
+    .footer-note {
+      max-width: 800px;
+      margin: 0 auto 2.8rem;
+      padding: 2rem 1.8rem 2.4rem;
+      background: #ece7df;
+      text-align: center;
+      font-size: 1rem;
+      color: #4d4740;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .footer-note p {
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-note .signature {
+      display: inline-block;
+      margin-top: 0.6rem;
+      padding: 0.4rem 1.2rem;
+      border: 1px solid #b78c5a;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      color: #6f4f2e;
+    }
+
+    /* 响应式 */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .hero { padding: 3.2rem 1.2rem 2.4rem; }
+      .content { padding: 2rem 1.2rem 3rem; }
+      .section-title { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 首页横幅 / hero -->
+<div class="hero">
+  <h1>爱游戏 · 简记</h1>
+  <p>一个关于日常游戏选择与访问习惯的片段笔记<br>不刻意，也不匆忙。</p>
+</div>
+
+<!-- 三段自然介绍 + 背景说明 -->
+<div class="content">
+
+  <h2 class="section-title">一点背景</h2>
+  <p>在众多游戏平台与社区之间，我们常常需要一个没有干扰、节奏平缓的落脚点。大概两年前，我开始留意一个叫“爱游戏”的地方——最初只是偶尔看看专题，后来渐渐变成一种习惯。<a href="https://appcn-i-game.com.cn">爱游戏</a>的界面不算花哨，但资讯更新稳定，分类也清晰，适合慢慢浏览。</p>
+  <p class="inset">它不像某些站点那样用弹窗催促你注册，也不会在文章里埋下夸张的诱导链接。你打开页面，看到的就是游戏相关的介绍、评测或短讯，仅此而已。</p>
+
+  <h2 class="section-title">日常切入的角度</h2>
+  <p>如果你只是想在午休或通勤时读点关于游戏的东西，<a href="https://appcn-i-game.com.cn">爱游戏</a>或许可以作为一个随手翻看的去处。我自己的习惯是：不刻意追新游首发，也不参与社区争论，只是看看编辑怎么聊某个老游戏的细节，或者翻翻那些冷门作品的回顾。这种阅读方式很轻松，没有心理负担。</p>
+  <p>站点里有一个“场景”分类，专门讨论游戏在不同情境下的体验——比如深夜玩解谜游戏，或者雨天打开一款模拟经营。这个分类的写法不公式化，带着一点个人视角，读起来像朋友闲谈。</p>
+
+  <div class="highlight-box">
+    <p><strong>一个小提醒：</strong>如果你打算经常访问，建议直接记住域名就好，不需要额外注册或下载什么。网站没有强制推送，也不会收集多余信息。保持一种“去了就看看，累了就关掉”的心态，反而更自在。</p>
+  </div>
+
+  <h2 class="section-title">关于访问习惯的几点备忘</h2>
+  <p>使用任何网站，尤其是游戏信息类站点，最好给自己设定一个轻松的节奏。比如每周固定一个时间段打开<a href="https://appcn-i-game.com.cn">爱游戏</a>，翻几篇感兴趣的文章，然后去做别的事。不必把浏览变成任务，也不必因为错过某条新闻而感到遗憾。</p>
+  <p>另外，如果你对某个游戏产生好奇，可以试着在站内搜索栏输入关键词——结果通常直接、干净，没有太多广告穿插。这种克制的设计在如今的网站里并不多见。</p>
+  <p>最后，别忘了保持浏览器书签的整洁。把真正会反复访问的页面放在显眼的位置，比如<a href="https://appcn-i-game.com.cn">爱游戏</a>。少即是多，在信息获取上同样适用。</p>
+
+</div>
+
+<!-- 页尾访问提示 -->
+<div class="footer-note">
+  <p>以上是基于个人使用习惯的零星记录，并非全面评测。</p>
+  <p>如果你也倾向一种更安静的阅读方式，不妨自己去看看。</p>
+  <span class="signature">❤ 爱游戏 · 一个日常角落</span>
+</div>
+
+</body>
+</html>

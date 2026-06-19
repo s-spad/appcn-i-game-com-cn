@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://s-spad.github.io/appcn-i-game-com-cn/sitemap.xml
