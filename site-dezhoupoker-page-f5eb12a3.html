@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>德州扑克 · 策略与思维的博弈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f5f9fc;
+            color: #1e2a3a;
+            line-height: 1.6;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* hero 区 */
+        .hero {
+            background: linear-gradient(145deg, #e0f0f5 0%, #cde3ed 100%);
+            border-radius: 2.5rem;
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 24px rgba(50, 130, 150, 0.08);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #0a2e3f;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: #1b7f8c;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0.8rem auto 1.6rem;
+            font-size: 1.2rem;
+            color: #2b4a57;
+        }
+
+        .hero .tagline {
+            display: inline-block;
+            background: rgba(27, 127, 140, 0.12);
+            padding: 0.4rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            color: #13656f;
+            font-weight: 500;
+            border: 1px solid rgba(27, 127, 140, 0.2);
+        }
+
+        /* 网格卡片区 */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.8rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 1.5rem 1.8rem;
+            box-shadow: 0 6px 18px rgba(0, 60, 80, 0.05);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(180, 210, 220, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(30, 90, 110, 0.08);
+            border-color: #9ac7d6;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            background: #e6f2f7;
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.4rem;
+            color: #1b7f8c;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0e3a47;
+            margin-bottom: 0.6rem;
+        }
+
+        .card p {
+            color: #385a67;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .card .note {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #5f7e8b;
+            border-top: 1px dashed #d5e4eb;
+            padding-top: 0.8rem;
+        }
+
+        /* 适合人群卡片 单独区域 */
+        .audience-section {
+            background: white;
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 60, 80, 0.03);
+            margin-bottom: 2.8rem;
+            border: 1px solid #d7e7ef;
+        }
+
+        .audience-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #0e3a47;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .audience-item {
+            background: #f2f9fd;
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.2rem 1.2rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            color: #1b4d5b;
+            border: 1px solid rgba(60, 150, 170, 0.12);
+            font-size: 1rem;
+        }
+
+        .audience-item::before {
+            content: "⚡";
+            font-size: 1.2rem;
+            color: #1b7f8c;
+        }
+
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: #e9f2f7;
+            border-radius: 2rem;
+            padding: 2rem 2.5rem;
+            margin-bottom: 2.5rem;
+            border-left: 6px solid #1b7f8c;
+        }
+
+        .link-paragraph p {
+            font-size: 1.05rem;
+            color: #1e3641;
+            max-width: 800px;
+        }
+
+        .link-paragraph a {
+            color: #106a78;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(27, 127, 140, 0.3);
+            transition: border-color 0.15s;
+        }
+
+        .link-paragraph a:hover {
+            border-bottom-color: #1b7f8c;
+        }
+
+        /* 提示 / FAQ 摘要 (折叠风格) */
+        .insight-box {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 50, 70, 0.02);
+            border: 1px solid #dceaf0;
+            margin-bottom: 2rem;
+        }
+
+        .insight-box h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0e3a47;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .insight-box h2 i {
+            font-style: normal;
+            background: #cbe3ed;
+            padding: 0 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: #0e4b59;
+        }
+
+        .faq-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .faq-item {
+            background: #f3f9fd;
+            border-radius: 1.4rem;
+            padding: 0.9rem 1.4rem;
+            border-left: 4px solid #9ac7d6;
+        }
+
+        .faq-item strong {
+            color: #1b5c6b;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item p {
+            color: #385a67;
+            font-size: 0.92rem;
+        }
+
+        /* 底部 */
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6e8d9b;
+            margin-top: 2rem;
+            border-top: 1px solid #d0e0e8;
+            padding-top: 1.8rem;
+        }
+
+        /* 移动端微调 */
+        @media (max-width: 640px) {
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .grid-cards {
+                gap: 1.2rem;
+            }
+            .audience-section {
+                padding: 1.8rem 1.2rem;
+            }
+            .link-paragraph {
+                padding: 1.5rem 1.2rem;
+            }
+            .card {
+                padding: 1.5rem 1.2rem;
+            }
+            .insight-box {
+                padding: 1.5rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .audience-item {
+                font-size: 0.9rem;
+                padding: 0.9rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero 主视觉 -->
+    <div class="hero">
+        <div class="tagline">♠️ 策略 · 心理 · 概率</div>
+        <h1>不只是牌局，更是<span>思维</span>的延伸</h1>
+        <p>在德州扑克的牌桌上，每一次决策都是信息与直觉的平衡。从位置意识到底池赔率，从读人到情绪管理，这个游戏承载着丰富的策略层次。</p>
+    </div>
+
+    <!-- 信息卡片：用途 -->
+    <div class="grid-cards">
+        <div class="card">
+            <div class="card-icon">🧠</div>
+            <h3>锻炼决策能力</h3>
+            <p>每一手牌都面对不完整信息，训练你在压力下做出合理判断。长期参与德州扑克有助于培养风险回报比思维和耐心。</p>
+            <div class="note">适合希望提升逻辑与情绪控制的人</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>理解概率与统计</h3>
+            <p>隐含赔率、手牌范围、胜率计算……德州扑克是概率论最生动的实践场。抽象数字变成具体选择，乐趣与学习并存。</p>
+            <div class="note">数学爱好者也能找到独特乐趣</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">🤝</div>
+            <h3>社交与心理博弈</h3>
+            <p>线下局中，微表情、下注节奏、行为模式都是语言。德州扑克提供了一种深度社交方式——在沉默中交流，在对抗中尊重。</p>
+            <div class="note">适合喜欢观察与分析的人</div>
+        </div>
+    </div>
+
+    <!-- 适合人群 -->
+    <div class="audience-section">
+        <h2>👥 常见参与人群</h2>
+        <div class="audience-grid">
+            <div class="audience-item">策略游戏爱好者</div>
+            <div class="audience-item">数学与逻辑爱好者</div>
+            <div class="audience-item">心理博弈爱好者</div>
+            <div class="audience-item">业余休闲牌手</div>
+            <div class="audience-item">团建社交玩家</div>
+            <div class="audience-item">编程与AI研究者</div>
+        </div>
+        <p style="margin-top: 1.2rem; color: #3f6676; font-size: 0.95rem;">无论你是偶尔参与，还是希望系统了解规则与策略，都可以在德州扑克领域找到适合自己的节奏。</p>
+    </div>
+
+    <!-- 自然链接段落 (嵌入 a 标签) -->
+    <div class="link-paragraph">
+        <p>如果你想进一步了解规则演变、常见术语、手牌价值以及不同场景下的策略思路，可以浏览关于 <a href="https://site-dezhoupoker.com">德州扑克</a> 的详细介绍页面。那里整理了从基础入门到进阶思考的多种内容，帮助你更全面地看待这项融合数学、心理学与自我管理的牌类活动。</p>
+    </div>
+
+    <!-- FAQ 摘要 / 提示卡片 -->
+    <div class="insight-box">
+        <h2>📌 常见疑问与提示 <i>摘要</i></h2>
+        <div class="faq-items">
+            <div class="faq-item">
+                <strong>新手如何开始？</strong>
+                <p>建议先了解手牌大小、位置概念和基本下注结构。从低额度或练习局开始，逐步建立读牌和底池控制的意识。</p>
+            </div>
+            <div class="faq-item">
+                <strong>德州扑克是运气游戏吗？</strong>
+                <p>短期有运气成分，长期而言策略、纪律和情绪管理决定胜率。这也是它吸引众多深度玩家的原因——永远有进步空间。</p>
+            </div>
+            <div class="faq-item">
+                <strong>线上与线下有什么不同？</strong>
+                <p>线下更注重肢体语言和现场动态，线上则偏向数学、多桌管理和软件工具。两种形式各有魅力，可以都尝试。</p>
+            </div>
+            <div class="faq-item">
+                <strong>如何避免常见的思维误区？</strong>
+                <p>注意“沉没成本”陷阱、结果导向偏见、以及高估自己手牌强度的倾向。定期回顾手牌历史是很好的提升方式。</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #437586;">以上内容仅为一般性介绍，具体策略和规则请以可靠来源为准。</p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        ♥ 理性参与 · 享受思考 · 尊重牌桌 ♦
+    </div>
+
+</div>
+</body>
+</html>
