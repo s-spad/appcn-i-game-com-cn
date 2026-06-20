@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>知识库 · bet365 说明页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fce9d8 0%, #fae1c6 45%, #fbdac0 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+      color: #2c2a28;
+    }
+
+    .page-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* 目录感布局——卡片组 */
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin: 2.5rem 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(160, 100, 50, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      flex: 1 1 250px;
+      backdrop-filter: blur(1px);
+      border: 1px solid rgba(255, 245, 235, 0.5);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px rgba(140, 80, 30, 0.10);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      color: #633f26;
+      border-left: 5px solid #d9995a;
+      padding-left: 0.9rem;
+    }
+
+    .card p, .card li {
+      font-size: 0.98rem;
+      color: #3e352e;
+    }
+
+    .card ul {
+      padding-left: 1.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .card li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* hero 区 (简洁入口) */
+    .hero-wrap {
+      background: rgba(255, 245, 235, 0.3);
+      backdrop-filter: blur(4px);
+      border-radius: 50px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 215, 175, 0.35);
+    }
+
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #492f1d;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      color: #5a4435;
+      max-width: 500px;
+      margin-top: 0.3rem;
+      font-size: 1.05rem;
+    }
+
+    .hero-link {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      padding: 0.7rem 2rem;
+      border-radius: 60px;
+      box-shadow: 0 4px 10px rgba(140, 70, 20, 0.08);
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      border: 1px solid #f3dac8;
+      white-space: nowrap;
+    }
+
+    .hero-link a {
+      text-decoration: none;
+      color: #633f26;
+      display: inline-block;
+    }
+
+    .hero-link a:hover {
+      color: #ab6e3b;
+    }
+
+    /* 说明区 / 提示区 */
+    .notice-area {
+      background: #fffbf6;
+      border-radius: 36px;
+      padding: 1.8rem 2.2rem;
+      margin: 2rem 0 1.5rem;
+      border: 1px solid #edcfb9;
+      box-shadow: inset 0 2px 6px rgba(255, 210, 170, 0.2), 0 6px 16px rgba(100, 60, 30, 0.04);
+    }
+
+    .notice-area h2 {
+      font-size: 1.4rem;
+      font-weight: 550;
+      color: #4d3625;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .notice-area p {
+      margin-bottom: 0.8rem;
+    }
+
+    .info-tag {
+      display: inline-block;
+      background: #eacbb2;
+      color: #3d2b1d;
+      border-radius: 40px;
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-right: 0.7rem;
+    }
+
+    /* faq 摘要 */
+    .faq-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      background: #fffcf9;
+      border-radius: 24px;
+      padding: 1rem 1.6rem 1.2rem;
+      flex: 1 1 200px;
+      border: 1px solid #eedccc;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 600;
+      color: #4d3625;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+
+    .faq-item span {
+      font-size: 0.9rem;
+      color: #5c4a3c;
+    }
+
+    /* 相关信息区 (表格风格) */
+    .info-section {
+      background: #fcf4ec;
+      border-radius: 40px;
+      padding: 1.8rem 2.2rem;
+      margin: 2rem 0 1rem;
+      border: 1px solid #e3cbb8;
+    }
+
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px dashed #dfc5b0;
+      padding: 0.7rem 0;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      flex: 0 0 110px;
+      font-weight: 500;
+      color: #532f1b;
+    }
+
+    .info-value {
+      flex: 1;
+      color: #3f3025;
+    }
+
+    /* 圆角按钮感链接 (内嵌句子) */
+    .inline-link {
+      color: #7a4b27;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.1rem 0.3rem;
+      border-radius: 40px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .inline-link:hover {
+      background: #eacbb2;
+      color: #2f1d12;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ecd3be;
+      margin: 2rem 0 0.5rem;
+      opacity: 0.4;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7a685a;
+      padding: 2rem 0 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .card-grid {
+        gap: 1.2rem;
+      }
+      .card {
+        padding: 1.4rem;
+      }
+      .hero-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.6rem;
+      }
+      .hero-text h1 {
+        font-size: 1.7rem;
+      }
+      .hero-link {
+        align-self: flex-start;
+      }
+      .notice-area {
+        padding: 1.4rem;
+      }
+      .info-row {
+        flex-direction: column;
+      }
+      .info-label {
+        flex: unset;
+        margin-bottom: 0.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- hero 入口 + 自然句子链接 -->
+  <div class="hero-wrap">
+    <div class="hero-text">
+      <h1>📚 bet365 知识库</h1>
+      <p>站点说明 · 使用指引 · 可信参考</p>
+    </div>
+    <div class="hero-link">
+      <a href="https://zho-bet365.com" style="text-decoration:none; color:inherit;">bet365</a>
+    </div>
+  </div>
+
+  <!-- 卡片目录感布局：站点介绍 / 可信说明 / 特点 -->
+  <div class="card-grid">
+    <div class="card">
+      <h3>📋 站点介绍</h3>
+      <p>本页面向对 <a href="https://zho-bet365.com" class="inline-link">bet365</a> 感兴趣的朋友提供一份轻量的信息汇集。你可以把它当作快速索引，了解平台背景、功能模块以及常见问题梗概。所有描述基于公开资料整理，帮助你在使用前建立基本认知。</p>
+    </div>
+    <div class="card">
+      <h3>🔐 可信说明</h3>
+      <p>我们注重信息的真实与克制。这里不提供夸张承诺，也不替代官方渠道。如果你需要最准确的条款或最新动态，建议直接访问 <a href="https://zho-bet365.com" class="inline-link">bet365</a> 查阅一手内容。本知识库仅作辅助参考，请自行判断信息时效性。</p>
+    </div>
+    <div class="card">
+      <h3>✨ 常见场景</h3>
+      <ul>
+        <li>初次了解平台功能与模块</li>
+        <li>快速定位帮助中心与规则</li>
+        <li>熟悉界面术语与操作区域</li>
+        <li>对比不同板块的差异</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 提示区 + 相关信息区合并 -->
+  <div class="notice-area">
+    <h2><span class="info-tag">提示</span> 从哪开始？</h2>
+    <p>如果你是第一次接触 <a href="https://zho-bet365.com" class="inline-link">bet365</a>，建议先花几分钟浏览主页的结构分区。首页通常聚合了主要入口、活动摘要和常用工具。右侧或顶部的导航栏会带你进入体育、娱乐、财务等模块。</p>
+    <p>遇到不熟悉的术语？很多页面提供问号图标或悬浮提示，也可以去帮助文档搜索关键词。养成核对规则的习惯，能让体验更顺畅。</p>
+  </div>
+
+  <!-- 相关信息区（目录式结构化信息） -->
+  <div class="info-section">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+      <span style="background: #d7b69b; width: 12px; height: 12px; border-radius: 20px; display: inline-block;"></span>
+      <span style="font-weight: 550; color: #3f2b1b;">相关信息速览</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label">平台类型</span>
+      <span class="info-value">综合性数字服务，包含体育、娱乐等板块，具体以官网界定为准。</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">语言支持</span>
+      <span class="info-value">多语言界面，中文内容可切换查看，方便不同地区用户。</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">访问建议</span>
+      <span class="info-value">使用现代浏览器，保持网络通畅。部分功能可能需注册或符合当地政策。</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">帮助入口</span>
+      <span class="info-value">页面底部或侧边通常有「帮助」「常见问题」链接，也可直接搜索关键词。</span>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要 -->
+  <h3 style="font-weight: 500; color: #462f1e; margin: 1.8rem 0 0.2rem;">❓ 常见疑问摘要</h3>
+  <div class="faq-mini">
+    <div class="faq-item">
+      <strong>如何确认信息可靠？</strong>
+      <span>交叉核对官网与帮助中心，留意页面更新时间。第三方介绍只能作为参考。</span>
+    </div>
+    <div class="faq-item">
+      <strong>忘记登录方式？</strong>
+      <span>在 <a href="https://zho-bet365.com" class="inline-link">bet365</a> 登录页点击「忘记密码」按指引重置，或联系客服。</span>
+    </div>
+    <div class="faq-item">
+      <strong>功能入口找不到？</strong>
+      <span>使用页面搜索（Ctrl+F）或查看网站地图。新版界面可能调整了菜单位置。</span>
+    </div>
+    <div class="faq-item">
+      <strong>是否支持移动端？</strong>
+      <span>多数服务已适配手机浏览器，部分功能可通过 APP 获得更好体验。</span>
+    </div>
+  </div>
+
+  <hr>
+  <div class="footer-note">
+    知识库式概览 · 仅作信息参考 · 具体以 <a href="https://zho-bet365.com" class="inline-link">bet365</a> 官方为准
+  </div>
+</div>
+</body>
+</html>
